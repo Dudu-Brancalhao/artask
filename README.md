@@ -75,3 +75,13 @@ Procedures:
 | `task.delete`  | mutation | `{ id }`                                   |
 
 Unknown ids return a `NOT_FOUND` error.
+
+## Frontend
+
+The home page (`/`) lists the tasks. It prefetches `task.list` on the server, so the first HTML already contains the tasks, and hands that data to the client through TanStack Query hydration, so there is no loading state on first load. Each task can be deleted from the list; a toast confirms the deletion or shows the error.
+
+There is no form to create tasks yet. To see some in the list, create them through the API:
+
+```bash
+curl -X POST http://localhost:3000/api/trpc/task.create -H 'content-type: application/json' -d '{"json":{"title":"Buy milk","description":"Whole milk"}}'
+```

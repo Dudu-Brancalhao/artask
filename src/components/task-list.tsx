@@ -3,6 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
 import { useTRPC } from "@/trpc/client";
+import { DeleteTaskButton } from "./delete-task-button";
 
 // A fixed locale and time zone give the same text on the server and in the
 // browser, so hydration never sees a mismatch.
@@ -52,6 +53,7 @@ function TaskItem({ task }: { task: Task }) {
           </span>
         </div>
       </div>
+      <DeleteTaskButton id={task.id} />
     </li>
   );
 }

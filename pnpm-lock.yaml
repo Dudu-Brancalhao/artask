@@ -8,9 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^5.108.2
+        version: 5.108.2(@types/react@19.3.0)(react@19.1.0)
+      '@trpc/client':
+        specifier: ^11.29.7
+        version: 11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3)
       '@trpc/server':
         specifier: ^11.29.7
         version: 11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3)
+      '@trpc/tanstack-react-query':
+        specifier: ^11.29.7
+        version: 11.29.7(@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.1.0))(@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(react@19.1.0)(typescript@5.9.3)
       next:
         specifier: 15.5.29
         version: 15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -20,6 +29,12 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      sonner:
+        specifier: ^2.0.8
+        version: 2.0.8(@types/react@19.3.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       superjson:
         specifier: ^2.2.7
         version: 2.2.7
@@ -609,6 +624,24 @@ packages:
   '@tailwindcss/postcss@4.3.5':
     resolution: {integrity: sha512-FAV37Tlx9wBiT/hkfgVD0Q6CWsP2oUX3lf28nrfjW8+ksILjnpuFulUqWDfNR4/ZiEHHDRBX8DUTzD1Rys687A==}
 
+  '@tanstack/query-core@5.108.2':
+    resolution: {integrity: sha512-0l+0xDKqn71hfJBKaAvFP/X7WYM0TbscEk6nK1pHaWQUWUEA+WJD0VlT8wF+HIJANMV9B/DouPWwDnX3w/l9BA==}
+
+  '@tanstack/react-query@5.108.2':
+    resolution: {integrity: sha512-wV6hEjVGTfh9rvu3uREYW0hgBfS9klDejGelhPY575jD5jg6qbAb1nzT7hR1Q+wemR66ZjtE5p9pAGUwqK8zbg==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@trpc/client@11.29.7':
+    resolution: {integrity: sha512-cW/8uDPDBEzSBdEoV0fLb6JL5U/YTOZRktLI7/bJJVsb9dz+qhYJST6YJEaI8yM6oz4MfnpCKf7Sk609zvjNxA==}
+    peerDependencies:
+      '@trpc/server': 11.29.7
+      typescript: '>=5.7.2'
+
   '@trpc/server@11.29.7':
     resolution: {integrity: sha512-9chUuB0abOfVkCm87lFQ3PTUJzPlErlf5HOBzvwtiGl7B0YdPBul1O597NTzjUcF1XDTsRqdnQfrz7BeptzSXQ==}
     peerDependencies:
@@ -629,6 +662,15 @@ packages:
         optional: true
       next:
         optional: true
+
+  '@trpc/tanstack-react-query@11.29.7':
+    resolution: {integrity: sha512-8UTTghi0CI9ZTp4p1nnSn7ZzzYytuIKoc7LE0obrC4ZTPloP9A2ER4WK/BkCPWIlGzGXLrSB+MrNRxyoX82TCQ==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.106.0
+      '@trpc/client': 11.29.7
+      '@trpc/server': 11.29.7
+      react: '>=18.2.0'
+      typescript: '>=5.7.2'
 
   '@tybys/wasm-util@0.10.5':
     resolution: {integrity: sha512-dOGOPxlaNV+G046mZzN+9C0dAcQZeSKcXiVaM0TYy/LM4ttTmgSBDxYfovcYI8Em3+eAbiAYpvWLOv8+ZVRJKA==}
@@ -1877,6 +1919,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+
   set-function-length@1.2.2:
     resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
     engines: {node: '>= 0.4'}
@@ -1921,6 +1966,16 @@ packages:
   side-channel@1.1.1:
     resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
+
+  sonner@2.0.8:
+    resolution: {integrity: sha512-UM/ByIoFra8yzV75n1o0Puu0bw5U/9UNnDacrJNspekBewIfsQ3D6ez1nvlWpt7aTsO6rujQtifBpycwIivqlg==}
+    peerDependencies:
+      '@types/react': ^18.0.0 || ^19.0.0
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   source-map-js@1.2.4:
     resolution: {integrity: sha512-J7ZjMvHd9O1fcT/5V09QWaaSl2BbWx3F6O08spde82Namf9UB0GxRVIPiNbVsdKkoizHiSpTodo3vp2bAy91MA==}
@@ -2585,11 +2640,33 @@ snapshots:
       postcss: 8.5.33
       tailwindcss: 4.3.5
 
+  '@tanstack/query-core@5.108.2': {}
+
+  '@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.1.0)':
+    dependencies:
+      '@tanstack/query-core': 5.108.2
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.3.0
+
+  '@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3)':
+    dependencies:
+      '@trpc/server': 11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3)
+      typescript: 5.9.3
+
   '@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
       next: 15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+
+  '@trpc/tanstack-react-query@11.29.7(@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.1.0))(@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(react@19.1.0)(typescript@5.9.3)':
+    dependencies:
+      '@tanstack/react-query': 5.108.2(@types/react@19.3.0)(react@19.1.0)
+      '@trpc/client': 11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/server': 11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3)
+      react: 19.1.0
+      typescript: 5.9.3
 
   '@tybys/wasm-util@0.10.5':
     dependencies:
@@ -3993,6 +4070,8 @@ snapshots:
 
   semver@7.8.6: {}
 
+  server-only@0.0.1: {}
+
   set-function-length@1.2.2:
     dependencies:
       define-data-property: 1.1.4
@@ -4082,6 +4161,13 @@ snapshots:
       side-channel-list: 1.0.1
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
+
+  sonner@2.0.8(@types/react@19.3.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   source-map-js@1.2.4: {}
 

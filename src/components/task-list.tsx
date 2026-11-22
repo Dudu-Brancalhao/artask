@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
+import { useLoadMoreOnVisible } from "@/hooks/use-load-more-on-visible";
 import { useTRPC } from "@/trpc/client";
 import { taskListInput, taskListPaging } from "@/trpc/task-list";
 import { DeleteTaskButton } from "./delete-task-button";
@@ -16,11 +17,17 @@ const dateFormat = new Intl.DateTimeFormat("en-US", {
 
 export function TaskList() {
   const trpc = useTRPC();
-  const { data } = useSuspenseInfiniteQuery(
-    trpc.task.list.infiniteQueryOptions(taskListInput, taskListPaging),
-  );
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useSuspenseInfiniteQuery(
+      trpc.task.list.infiniteQueryOptions(taskListInput, taskListPaging),
+    );
   // Every loaded page is kept in data.pages. The list shows them all in order.
   const tasks = data.pages.flatMap((page) => page.items);
+  const loadMoreRef = useLoadMoreOnVisible({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   if (tasks.length === 0) {
     return (
@@ -34,11 +41,20 @@ export function TaskList() {
   }
 
   return (
-    <ul className="space-y-3">
-      {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
-      ))}
-    </ul>
+    <>
+      <ul className="space-y-3">
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </ul>
+      <div
+        ref={loadMoreRef}
+        className="py-6 text-center text-sm text-slate-400"
+      >
+        {isFetchingNextPage && "Loading more…"}
+        {!hasNextPage && data.pages.length > 1 && "You're all caught up"}
+      </div>
+    </>
   );
 }
 

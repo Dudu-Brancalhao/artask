@@ -32,7 +32,7 @@ export function TaskList() {
 
   if (tasks.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-purple-200 bg-white px-6 py-12 text-center">
+      <div className="rounded-2xl border border-dashed border-indigo-200 bg-white px-6 py-12 text-center">
         <p className="font-medium text-slate-700">No tasks yet</p>
         <p className="mt-1 text-sm text-slate-500">
           New tasks will show up here.
@@ -79,7 +79,7 @@ function TaskItem({ task }: { task: Task }) {
       <div className="flex shrink-0 items-center gap-1">
         <Link
           href={`/tasks/${task.id}/edit`}
-          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
         >
           <Pencil size={16} aria-hidden="true" />
           Edit
@@ -92,11 +92,11 @@ function TaskItem({ task }: { task: Task }) {
 
 function StatusBadge({ completed }: { completed: boolean }) {
   return completed ? (
-    <span className="rounded-full bg-purple-100 px-2.5 py-0.5 font-medium text-purple-700">
+    <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 font-medium text-indigo-700">
       Completed
     </span>
   ) : (
-    <span className="rounded-full bg-purple-50 px-2.5 py-0.5 font-medium text-purple-500">
+    <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 font-medium text-indigo-500">
       Pending
     </span>
   );

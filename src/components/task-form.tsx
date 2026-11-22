@@ -168,7 +168,7 @@ export function TaskForm({ task }: { task?: Task }) {
             type="checkbox"
             checked={completed}
             onChange={(event) => setCompleted(event.target.checked)}
-            className="size-4 rounded border-slate-300 accent-purple-600 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
+            className="size-4 rounded border-slate-300 accent-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
           />
           <label
             htmlFor={`${id}-completed`}
@@ -182,14 +182,14 @@ export function TaskForm({ task }: { task?: Task }) {
       <div className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
         <Link
           href="/"
-          className="rounded-lg px-4 py-2 text-center text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
+          className="rounded-lg px-4 py-2 text-center text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
         >
           Cancel
         </Link>
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isPending ? "Saving…" : task ? "Save changes" : "Create task"}
         </button>
@@ -199,7 +199,7 @@ export function TaskForm({ task }: { task?: Task }) {
 }
 
 const inputClassName =
-  "mt-1.5 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-200 focus:outline-none aria-invalid:border-red-400 aria-invalid:focus:ring-red-100";
+  "mt-1.5 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 focus:outline-none aria-invalid:border-red-400 aria-invalid:focus:ring-red-100";
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;

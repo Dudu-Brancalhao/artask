@@ -2,6 +2,7 @@
 
 import { Pencil } from "lucide-react";
 import Link from "next/link";
+import { LinkPendingContent } from "@/components/link-pending-content";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
 import { useLoadMoreOnVisible } from "@/hooks/use-load-more-on-visible";
@@ -79,8 +80,11 @@ function TaskItem({ task }: { task: Task }) {
             href={`/tasks/${task.id}/edit`}
             className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
           >
-            <Pencil size={16} aria-hidden="true" />
-            Edit
+            <LinkPendingContent
+              icon={<Pencil size={16} aria-hidden="true" />}
+              label="Edit"
+              pendingLabel="Opening…"
+            />
           </Link>
           <DeleteTaskButton id={task.id} />
         </div>

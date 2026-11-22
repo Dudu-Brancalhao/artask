@@ -92,7 +92,7 @@ function TaskItem({ task }: { task: Task }) {
 
 function StatusBadge({ completed }: { completed: boolean }) {
   return completed ? (
-    <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 font-medium text-indigo-700">
+    <span className="rounded-full bg-green-100 px-2.5 py-0.5 font-medium text-green-700">
       Completed
     </span>
   ) : (

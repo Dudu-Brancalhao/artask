@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
 import { useTRPC } from "@/trpc/client";
@@ -53,7 +54,15 @@ function TaskItem({ task }: { task: Task }) {
           </span>
         </div>
       </div>
-      <DeleteTaskButton id={task.id} />
+      <div className="flex shrink-0 items-center gap-1">
+        <Link
+          href={`/tasks/${task.id}/edit`}
+          className="rounded-lg px-3 py-1.5 text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
+        >
+          Edit
+        </Link>
+        <DeleteTaskButton id={task.id} />
+      </div>
     </li>
   );
 }

@@ -11,8 +11,15 @@ export const taskSchema = z.object({
 
 export type Task = z.infer<typeof taskSchema>;
 
-const title = z.string().trim().min(1, "Title is required").max(120);
-const description = z.string().trim().max(1000);
+const title = z
+  .string()
+  .trim()
+  .min(1, "Title is required")
+  .max(120, "Title must be 120 characters or fewer");
+const description = z
+  .string()
+  .trim()
+  .max(1000, "Description must be 1000 characters or fewer");
 
 export const createTaskInput = z.object({
   title,

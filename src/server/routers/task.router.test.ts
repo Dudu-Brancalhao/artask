@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createCallerFactory } from "../trpc";
+import type { TaskPage } from "../tasks/task.schema";
 import { TaskStore } from "../tasks/task.store";
 import { appRouter } from "./_app";
 
@@ -48,6 +49,13 @@ describe("task.create", () => {
   });
 });
 
+const createTasks = async (count: number) => {
+  for (let i = 1; i <= count; i++) {
+    await api.task.create({ title: `Task ${i}` });
+    vi.advanceTimersByTime(1000);
+  }
+};
+
 describe("task.list", () => {
   it("returns tasks newest first", async () => {
     await api.task.create({ title: "First" });
@@ -56,6 +64,55 @@ describe("task.list", () => {
 
     const { items } = await api.task.list({});
     expect(items.map((task) => task.title)).toEqual(["Second", "First"]);
+  });
+
+  it("returns the first page up to the limit with a cursor to the next one", async () => {
+    await createTasks(5);
+
+    const page = await api.task.list({ limit: 2 });
+
+    expect(page.items.map((task) => task.title)).toEqual(["Task 5", "Task 4"]);
+    expect(page.nextCursor).toBe(page.items[1].id);
+  });
+
+  it("follows the cursor through every task once and ends with a null cursor", async () => {
+    await createTasks(5);
+
+    const titles: string[] = [];
+    let cursor: string | null = null;
+    do {
+      const page: TaskPage = await api.task.list({ limit: 2, cursor });
+      titles.push(...page.items.map((task) => task.title));
+      cursor = page.nextCursor;
+    } while (cursor);
+
+    expect(titles).toEqual(["Task 5", "Task 4", "Task 3", "Task 2", "Task 1"]);
+  });
+
+  it("keeps the next page stable when a newer task is created", async () => {
+    await createTasks(4);
+    const first = await api.task.list({ limit: 2 });
+
+    await api.task.create({ title: "Newest" });
+    const second = await api.task.list({ limit: 2, cursor: first.nextCursor });
+
+    expect(second.items.map((task) => task.title)).toEqual([
+      "Task 2",
+      "Task 1",
+    ]);
+    expect(second.nextCursor).toBeNull();
+  });
+
+  it("rejects a limit outside 1 to 50 and an unknown cursor", async () => {
+    await expect(api.task.list({ limit: 0 })).rejects.toMatchObject({
+      code: "BAD_REQUEST",
+    });
+    await expect(api.task.list({ limit: 51 })).rejects.toMatchObject({
+      code: "BAD_REQUEST",
+    });
+    await expect(api.task.list({ cursor: unknownId })).rejects.toMatchObject({
+      code: "BAD_REQUEST",
+    });
   });
 });
 

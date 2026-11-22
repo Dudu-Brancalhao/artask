@@ -62,31 +62,37 @@ export function TaskList() {
 
 function TaskItem({ task }: { task: Task }) {
   return (
-    <li className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-      <div className="min-w-0 flex-1">
-        <h2 className="font-medium break-words text-slate-900">{task.title}</h2>
-        {task.description && (
-          <p className="mt-1 text-sm break-words whitespace-pre-line text-slate-600">
-            {task.description}
-          </p>
-        )}
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+    <li className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="flex items-start gap-4">
+        <div className="min-w-0 flex-1">
+          <h2 className="font-medium break-words text-slate-900">
+            {task.title}
+          </h2>
+          {task.description && (
+            <p className="mt-1 text-sm break-words whitespace-pre-line text-slate-600">
+              {task.description}
+            </p>
+          )}
+        </div>
+        <div className="flex shrink-0 items-center gap-1">
+          <Link
+            href={`/tasks/${task.id}/edit`}
+            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
+          >
+            <Pencil size={16} aria-hidden="true" />
+            Edit
+          </Link>
+          <DeleteTaskButton id={task.id} />
+        </div>
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <StatusBadge completed={task.completed} />
           <span className="text-slate-400">
             Created {dateFormat.format(task.createdAt)}
           </span>
         </div>
-      </div>
-      <div className="flex shrink-0 items-center gap-1">
         <ToggleTaskButton id={task.id} completed={task.completed} />
-        <Link
-          href={`/tasks/${task.id}/edit`}
-          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"
-        >
-          <Pencil size={16} aria-hidden="true" />
-          Edit
-        </Link>
-        <DeleteTaskButton id={task.id} />
       </div>
     </li>
   );

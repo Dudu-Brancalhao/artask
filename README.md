@@ -69,7 +69,7 @@ Procedures:
 
 | Procedure      | Type     | Input                                      |
 | -------------- | -------- | ------------------------------------------ |
-| `task.list`    | query    | none (returns newest first)                |
+| `task.list`    | query    | `{ limit?, cursor? }` (see below)          |
 | `task.getById` | query    | `{ id }`                                   |
 | `task.create`  | mutation | `{ title, description? }`                  |
 | `task.update`  | mutation | `{ id, title?, description?, completed? }` |
@@ -77,9 +77,11 @@ Procedures:
 
 Unknown ids return a `NOT_FOUND` error.
 
+`task.list` returns one page of tasks, newest first, as `{ items, nextCursor }`. `limit` is 1 to 50 (default 10). To get the next page, send the `nextCursor` you received as `cursor`; it is `null` on the last page. The cursor is the id of the last task of the previous page, so tasks created or deleted in between do not shift the pages. A cursor whose task no longer exists returns `BAD_REQUEST`.
+
 ## Frontend
 
-The home page (`/`) lists the tasks. It prefetches `task.list` on the server, so the first HTML already contains the tasks, and hands that data to the client through TanStack Query hydration, so there is no loading state on first load. Each task can be deleted from the list; a toast confirms the deletion or shows the error.
+The home page (`/`) lists the tasks. It prefetches `task.list` on the server, so the first HTML already contains the first page of tasks, and hands that data to the client through TanStack Query hydration, so there is no loading state on first load. Each task can be deleted from the list; a toast confirms the deletion or shows the error.
 
 The "Create task" button opens `/tasks/new`, and the "Edit" link on each task opens `/tasks/[id]/edit`. Both pages render the same `TaskForm` component; the edit page loads the task on the server and returns a 404 when it does not exist. In edit mode the form can also mark the task as completed, and clearing the description removes it.
 
@@ -92,4 +94,19 @@ To create tasks without the UI, call the API directly:
 
 ```bash
 curl -X POST http://localhost:3000/api/trpc/task.create -H 'content-type: application/json' -d '{"json":{"title":"Buy milk","description":"Whole milk"}}'
+```
+
+### Infinite scroll
+
+The list loads 10 tasks at a time. The server renders only the first page; when the end of the list gets close to the screen, the next page is requested and added below.
+
+- `src/server/tasks/task.store.ts` (`listPage`) returns a page and the cursor for the next one.
+- `src/components/task-list.tsx` uses TanStack Query's `useSuspenseInfiniteQuery`, which keeps every loaded page and knows the next cursor.
+- `src/hooks/use-load-more-on-visible.ts` watches an empty element below the last task with an `IntersectionObserver` and calls `fetchNextPage` when it comes into view.
+- `src/app/page.tsx` prefetches the first page with the same options (`src/trpc/task-list.ts`), so the browser starts from the server's page.
+
+Creating, editing or deleting a task refetches the loaded pages. To try it, create 30 tasks:
+
+```bash
+for i in $(seq 1 30); do curl -s -X POST http://localhost:3000/api/trpc/task.create -H 'content-type: application/json' -d "{\"json\":{\"title\":\"Task $i\"}}" > /dev/null; done
 ```

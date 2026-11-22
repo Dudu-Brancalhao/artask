@@ -1,3 +1,4 @@
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { TaskList } from "@/components/task-list";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
@@ -26,8 +27,9 @@ export default async function Home() {
         </div>
         <Link
           href="/tasks/new"
-          className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:outline-none"
         >
+          <Plus size={16} aria-hidden="true" />
           Create task
         </Link>
       </header>

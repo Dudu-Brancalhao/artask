@@ -20,6 +20,9 @@ importers:
       '@trpc/tanstack-react-query':
         specifier: ^11.29.7
         version: 11.29.7(@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.1.0))(@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.29.7(next@15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.9.3))(react@19.1.0)(typescript@5.9.3)
+      lucide-react:
+        specifier: ^1.77.0
+        version: 1.77.0(@types/react@19.3.0)(react@19.1.0)
       next:
         specifier: 15.5.29
         version: 15.5.29(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1675,6 +1678,15 @@ packages:
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
+
+  lucide-react@1.77.0:
+    resolution: {integrity: sha512-VS6sOi8ZUH1qm6swBL/tpI4xAhB6pFTdHvw3pfCJD+DaTJwpyynVzfOS6mdyMZ+OCdY/GMSQbqinOMOPbNSrQA==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   magic-string@1.4.5:
     resolution: {integrity: sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==}
@@ -3799,6 +3811,12 @@ snapshots:
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
+
+  lucide-react@1.77.0(@types/react@19.3.0)(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   magic-string@1.4.5:
     dependencies:

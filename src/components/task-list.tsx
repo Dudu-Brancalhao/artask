@@ -1,5 +1,6 @@
 "use client";
 
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
@@ -78,8 +79,9 @@ function TaskItem({ task }: { task: Task }) {
       <div className="flex shrink-0 items-center gap-1">
         <Link
           href={`/tasks/${task.id}/edit`}
-          className="rounded-lg px-3 py-1.5 text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50 focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:outline-none"
         >
+          <Pencil size={16} aria-hidden="true" />
           Edit
         </Link>
         <DeleteTaskButton id={task.id} />

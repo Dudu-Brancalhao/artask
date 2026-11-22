@@ -42,7 +42,7 @@ export function TaskForm({ task }: { task?: Task }) {
 
   const onSuccess = async (message: string) => {
     await queryClient.invalidateQueries({
-      queryKey: trpc.task.list.queryKey(),
+      queryKey: trpc.task.list.pathKey(),
     });
     if (task) {
       await queryClient.invalidateQueries({

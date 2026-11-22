@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { TaskList } from "@/components/task-list";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
+import { taskListInput, taskListPaging } from "@/trpc/task-list";
 
 // Tasks live in memory and change at runtime, so render on every request.
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  await getQueryClient().prefetchQuery(trpc.task.list.queryOptions());
+  // Only the first page is rendered on the server. The browser loads the
+  // rest while scrolling.
+  await getQueryClient().prefetchInfiniteQuery(
+    trpc.task.list.infiniteQueryOptions(taskListInput, taskListPaging),
+  );
 
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-12 sm:py-16">

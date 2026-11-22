@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import type { Task } from "@/server/tasks/task.schema";
 import { useTRPC } from "@/trpc/client";
+import { taskListInput, taskListPaging } from "@/trpc/task-list";
 import { DeleteTaskButton } from "./delete-task-button";
 
 // A fixed locale and time zone give the same text on the server and in the
@@ -15,7 +16,11 @@ const dateFormat = new Intl.DateTimeFormat("en-US", {
 
 export function TaskList() {
   const trpc = useTRPC();
-  const { data: tasks } = useSuspenseQuery(trpc.task.list.queryOptions());
+  const { data } = useSuspenseInfiniteQuery(
+    trpc.task.list.infiniteQueryOptions(taskListInput, taskListPaging),
+  );
+  // Every loaded page is kept in data.pages. The list shows them all in order.
+  const tasks = data.pages.flatMap((page) => page.items);
 
   if (tasks.length === 0) {
     return (

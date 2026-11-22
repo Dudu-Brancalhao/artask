@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { publicProcedure, router } from "../trpc";
 import {
   createTaskInput,
+  listTasksInput,
   taskIdInput,
   updateTaskInput,
 } from "../tasks/task.schema";
@@ -10,7 +11,16 @@ const notFound = (id: string) =>
   new TRPCError({ code: "NOT_FOUND", message: `Task ${id} not found` });
 
 export const taskRouter = router({
-  list: publicProcedure.query(({ ctx }) => ctx.store.list()),
+  list: publicProcedure.input(listTasksInput).query(({ ctx, input }) => {
+    const page = ctx.store.listPage(input);
+    if (!page) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: `Cursor ${input.cursor} does not match any task`,
+      });
+    }
+    return page;
+  }),
 
   getById: publicProcedure.input(taskIdInput).query(({ ctx, input }) => {
     const task = ctx.store.get(input.id);

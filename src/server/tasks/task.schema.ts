@@ -46,3 +46,13 @@ export const updateTaskInput = z
 export type UpdateTaskInput = z.infer<typeof updateTaskInput>;
 
 export const taskIdInput = z.object({ id: z.uuid() });
+
+export const listTasksInput = z.object({
+  limit: z.number().int().min(1).max(50).default(10),
+  // The id of the last task of the previous page. Missing on the first page.
+  cursor: z.uuid().nullish(),
+});
+
+export type ListTasksInput = z.infer<typeof listTasksInput>;
+
+export type TaskPage = { items: Task[]; nextCursor: string | null };

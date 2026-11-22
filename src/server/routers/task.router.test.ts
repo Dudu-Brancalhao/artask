@@ -44,7 +44,7 @@ describe("task.create", () => {
     await expect(api.task.create({ title: "   " })).rejects.toMatchObject({
       code: "BAD_REQUEST",
     });
-    expect(await api.task.list()).toEqual([]);
+    expect((await api.task.list({})).items).toEqual([]);
   });
 });
 
@@ -54,8 +54,8 @@ describe("task.list", () => {
     vi.advanceTimersByTime(1000);
     await api.task.create({ title: "Second" });
 
-    const titles = (await api.task.list()).map((task) => task.title);
-    expect(titles).toEqual(["Second", "First"]);
+    const { items } = await api.task.list({});
+    expect(items.map((task) => task.title)).toEqual(["Second", "First"]);
   });
 });
 
@@ -99,7 +99,7 @@ describe("task.delete", () => {
 
     await api.task.delete({ id: task.id });
 
-    expect(await api.task.list()).toEqual([]);
+    expect((await api.task.list({})).items).toEqual([]);
     await expectNotFound(api.task.delete({ id: task.id }));
   });
 });

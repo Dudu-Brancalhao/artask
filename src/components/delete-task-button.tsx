@@ -11,7 +11,8 @@ export function DeleteTaskButton({ id }: { id: string }) {
     trpc.task.delete.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries({
-          queryKey: trpc.task.list.queryKey(),
+          // pathKey matches every task.list query, including the infinite one.
+          queryKey: trpc.task.list.pathKey(),
         });
         toast.success("Task deleted");
       },

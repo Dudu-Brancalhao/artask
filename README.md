@@ -6,7 +6,8 @@ ArTask is a Next.js 15 app that simulates a task management application. The bac
 
 1. Task modeling: Changed "dataCriacao" to "createdAt" for convention, also added "updatedAt" and "completed" just to have the option to mark as done.
 2. CRUD operations: Added 5 procedures: list, getById, create, update, delete, validated with Zod. A missing ID returns a proper "not found" error.
-3. Validations and Error treatment: 
+3. Validations and Error treatment:
+
 - Creating a task with empty title is rejected
 - getById missing id returns NOT_FOUND
 - getById with an invalid ID format (not UUID) returns BAD_REQUEST

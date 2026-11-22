@@ -8,6 +8,7 @@ import { useLoadMoreOnVisible } from "@/hooks/use-load-more-on-visible";
 import { useTRPC } from "@/trpc/client";
 import { taskListInput, taskListPaging } from "@/trpc/task-list";
 import { DeleteTaskButton } from "./delete-task-button";
+import { ToggleTaskButton } from "./toggle-task-button";
 
 // A fixed locale and time zone give the same text on the server and in the
 // browser, so hydration never sees a mismatch.
@@ -77,6 +78,7 @@ function TaskItem({ task }: { task: Task }) {
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-1">
+        <ToggleTaskButton id={task.id} completed={task.completed} />
         <Link
           href={`/tasks/${task.id}/edit`}
           className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none"

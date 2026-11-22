@@ -2,20 +2,6 @@
 
 ArTask is a Next.js 15 app that simulates a task management application. The backend keeps the task list in memory and exposes it through tRPC.
 
-## Decisions
-
-1. Task modeling: Changed "dataCriacao" to "createdAt" for convention, also added "updatedAt" and "completed" just to have the option to mark as done.
-2. CRUD operations: Added 5 procedures: list, getById, create, update, delete, validated with Zod. A missing ID returns a proper "not found" error.
-3. Validations and Error treatment:
-
-- Creating a task with empty title is rejected
-- getById missing id returns NOT_FOUND
-- getById with an invalid ID format (not UUID) returns BAD_REQUEST
-- delete non existing id returns NOT_FOUND
-- update non existing id returns NOT_FOUND
-- title over 120 characters or a description over 1000 returns BAD_REQUEST
-- a whitespace-only title is trimmed and then rejected
-
 ## Stack
 
 - [Next.js 15](https://nextjs.org) (App Router) with React 19

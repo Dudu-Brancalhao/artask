@@ -81,7 +81,14 @@ Unknown ids return a `NOT_FOUND` error.
 
 The home page (`/`) lists the tasks. It prefetches `task.list` on the server, so the first HTML already contains the tasks, and hands that data to the client through TanStack Query hydration, so there is no loading state on first load. Each task can be deleted from the list; a toast confirms the deletion or shows the error.
 
-There is no form to create tasks yet. To see some in the list, create them through the API:
+The "Create task" button opens `/tasks/new`, and the "Edit" link on each task opens `/tasks/[id]/edit`. Both pages render the same `TaskForm` component; the edit page loads the task on the server and returns a 404 when it does not exist. In edit mode the form can also mark the task as completed, and clearing the description removes it.
+
+The form validates on submit with the same Zod schema the server uses (`src/server/tasks/task.schema.ts`), so an invalid form never reaches the API. Errors are shown in one place each:
+
+- Field errors, from the client check or from the server's Zod validation, appear under the field.
+- The result of the request (created, updated, not found, network or server error) appears as a toast.
+
+To create tasks without the UI, call the API directly:
 
 ```bash
 curl -X POST http://localhost:3000/api/trpc/task.create -H 'content-type: application/json' -d '{"json":{"title":"Buy milk","description":"Whole milk"}}'

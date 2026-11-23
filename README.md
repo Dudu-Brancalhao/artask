@@ -2,6 +2,33 @@
 
 ArTask is a Next.js 15 app that simulates a task management application. The backend keeps the task list in memory and exposes it through tRPC.
 
+![ArTask preview](docs/preview.gif)
+
+## How it works
+
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant S as Next.js server
+    participant A as tRPC API (/api/trpc)
+    participant M as In-memory store
+
+    B->>S: GET /
+    S->>M: task.list (direct call, no HTTP)
+    M-->>S: first page + nextCursor
+    S-->>B: HTML with tasks + hydrated query data
+    Note over B: No loading state on first load
+
+    B->>A: task.list { cursor } (on scroll)
+    A->>M: listPage
+    M-->>A: next page
+    A-->>B: items + nextCursor
+
+    B->>A: task.create / update / delete
+    A->>M: mutate (Zod-validated)
+    A-->>B: result -> toast, refetch list
+```
+
 ## Stack
 
 - [Next.js 15](https://nextjs.org) (App Router) with React 19
